@@ -1,0 +1,20 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+@import "tailwindcss";
+@plugin "daisyui";
+
+@theme {
+  --color-brand-bg: #020617;
+  --color-brand-text: #ffffff;
+  --color-brand-border: #1e293b;
+  --color-brand-blue:#00AEEF
+  --font-Roboto: "Roboto", sans-serif;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-brand-bg);
+    color: var(--color-brand-text);
+    font-family: var(--font-Roboto);
+  }
+}
