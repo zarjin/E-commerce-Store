@@ -1,59 +1,58 @@
 import { Link } from "react-router";
-
-export default function Login() {
+const Login = () => {
   return (
-    <div className="w-full h-screen flex items-center justify-center ">
-      <div className="form w-fit h-fit p-8 bg-[#00aaff20] border  rounded-xl shadow-lg">
-        <h2 className="text-3xl font-semibold mb-6 text-blue-600">Login</h2>
+    <div className="relative flex min-h-screen items-center justify-center p-4 overflow-hidden">
+      <div className="absolute w-full h-full bg-white/25 blur-[160px] z-0" />
 
-        <form className="space-y-5">
-          {/* Email Field */}
-          <div className="flex flex-col gap-1">
-            <label htmlFor="email" className="text-sm font-medium ">
-              Email
-            </label>
-            <div className="w-64 h-10 border-2 border-blue-400 rounded-2xl overflow-hidden ">
+      <div className="relative z-10 w-full max-w-md rounded-[40px] border border-white/10 bg-[#232729] p-10 shadow-2xl">
+        <div className="absolute -top-20 -left-20 h-64 w-64 rounded-full bg-blue-500/30 blur-[80px]" />
+        <div className="absolute -top-20 -right-20 h-64 w-64 rounded-full bg-blue-600/20 blur-[80px]" />
+
+        <div className="relative z-20">
+          <h2 className="mb-8 text-center text-2xl font-bold text-white">
+            Login
+          </h2>
+
+          <form className="space-y-4">
+            <div>
+              <label className="mb-2 block text-sm text-gray-300">Email</label>
               <input
                 type="email"
-                name="email"
-                id="email"
-                placeholder="email@example.com"
-                className="w-full h-full outline-none px-3"
+                placeholder="you@example.com"
+                className="w-full p-4 rounded-xl border border-white/10 bg-white/5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
               />
             </div>
-          </div>
 
-          {/* Password Field */}
-          <div className="flex flex-col gap-1">
-            <label htmlFor="password" Gen className="text-sm font-medium ">
-              Password
-            </label>
-            <div className="w-64 h-10 border-2 border-blue-400 rounded-2xl overflow-hidden ">
+            <div>
+              <label className="mb-2 block text-sm text-gray-300">
+                Password
+              </label>
               <input
                 type="password"
-                name="password"
-                id="password"
                 placeholder="••••••••"
-                className="w-full h-full outline-none px-3"
+                className="w-full p-4 rounded-xl border border-white/10 bg-white/5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
               />
             </div>
-          </div>
 
-          <button
-            type="submit"
-            className="w-full py-2 bg-blue-500 text-white rounded-2xl font-bold hover:bg-blue-600 transition-colors"
-          >
-            Login Account
-          </button>
-        </form>
-        <div className="flex items-center space-x-2.5 mt-2.5">
-          {" "}
-          <h1> create an new account? </h1>
-          <Link to={"/register"}>
-            <span className="font-semibold text-[#00AEEF]">Register</span>
-          </Link>
+            <button
+              type="submit"
+              className="w-full mt-4 py-4 rounded-xl bg-blue-600 font-bold text-white transition-all hover:bg-blue-500 shadow-lg shadow-blue-500/20"
+            >
+              Login Account
+            </button>
+          </form>
+          <div className="mt-4 text-center">
+            <p className="text-gray-400">
+              Don't have an account?{" "}
+              <Link to="/register" className="text-blue-500 hover:underline">
+                Register
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default Login;
