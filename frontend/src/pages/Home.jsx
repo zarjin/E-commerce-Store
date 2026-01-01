@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import { Link } from "react-router";
 import Button from "../components/Button";
 
 export default function Home() {
@@ -13,7 +14,9 @@ export default function Home() {
         <h1 className="text-6xl font-semibold">Buy Less. Choose Better.</h1>
       </motion.div>
 
-      <Button buttonName={"View All Product"} />
+      <Link to="/products">
+        <Button buttonName={"View All Product"} />
+      </Link>
     </div>
   );
 }

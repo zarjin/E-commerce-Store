@@ -4,6 +4,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import ProductCreate from "./pages/ProductCreate";
 import Profile from "./pages/Profile";
+import Product from "./pages/Product";
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/product-create" element={<ProductCreate />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/products" element={<Product />} />
     </Routes>
   );
 }
