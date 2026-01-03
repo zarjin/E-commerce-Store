@@ -2,12 +2,9 @@ import JWT from "jsonwebtoken";
 
 export const generateToken = (userId) => {
   try {
-    return (
-      JWT.sign({ id: userId }, process.env.JWT_SECRET),
-      {
-        expiresIn: "7d",
-      }
-    );
+    return JWT.sign({ id: userId }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
   } catch (error) {
     console.error("Error generating token:", error);
     throw error;

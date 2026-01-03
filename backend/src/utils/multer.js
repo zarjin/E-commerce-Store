@@ -7,7 +7,6 @@ const profileImageStorage = new CloudinaryStorage({
   params: {
     folder: "ProfileImages",
     allowed_formats: ["jpg", "jpeg", "png"],
-    transformation: [{ width: 500, height: 500, crop: "limit" }],
   },
 });
 
@@ -16,7 +15,6 @@ const productImageStorage = new CloudinaryStorage({
   params: {
     folder: "ProductImages",
     allowed_formats: ["jpg", "jpeg", "png"],
-    transformation: [{ width: 500, height: 500, crop: "limit" }],
   },
 });
 
