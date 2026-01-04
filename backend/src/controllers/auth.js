@@ -22,7 +22,7 @@ export const register = async (req, res) => {
       name,
       email,
       password: hashedPassword,
-      profile: req.file.path,
+      profile: req.file ? req.file.path : "",
     });
 
     const token = generateToken(newUser._id);

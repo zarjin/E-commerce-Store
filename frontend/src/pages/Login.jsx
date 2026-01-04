@@ -1,5 +1,29 @@
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router";
+import { login } from "../redux/features/authSlice.js";
+
 const Login = () => {
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  const dispatch = useDispatch();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUser((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(login(user));
+  };
+
   return (
     <div className="relative flex min-h-screen items-center justify-center p-4 overflow-hidden">
       <div className="absolute w-full h-full bg-white/25 blur-[160px] z-0" />
@@ -13,11 +37,14 @@ const Login = () => {
             Login
           </h2>
 
-          <form className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="mb-2 block text-sm text-gray-300">Email</label>
               <input
+                onChange={handleChange}
                 type="email"
+                name="email"
+                value={user.email}
                 placeholder="you@example.com"
                 className="w-full p-4 rounded-xl border border-white/10 bg-white/5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
               />
@@ -28,7 +55,10 @@ const Login = () => {
                 Password
               </label>
               <input
+                onChange={handleChange}
                 type="password"
+                name="password"
+                value={user.password}
                 placeholder="••••••••"
                 className="w-full p-4 rounded-xl border border-white/10 bg-white/5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
               />
