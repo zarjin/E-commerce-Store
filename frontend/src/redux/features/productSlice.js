@@ -24,6 +24,25 @@ export const getProduct = createAsyncThunk(
   }
 );
 
+export const getAllProduct = createAsyncThunk(
+  "product/getAllProduct",
+  async () => {
+    const response = await axios.get(`http://localhost:3000/api/product/get`);
+
+    return response.data;
+  }
+);
+
+export const deleteProduct = createAsyncThunk(
+  "product/deleteProduct",
+  async (productId) => {
+    const response = await axios.delete(
+      `http://localhost:3000/api/product/delete/${productId}`
+    );
+    return response.data;
+  }
+);
+
 export const productSlice = createSlice({
   name: "product",
   initialState: {
@@ -35,6 +54,7 @@ export const productSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
+    // Create Product
     builder.addCase(createProduct.pending, (state) => {
       state.loading = true;
     });
@@ -47,9 +67,43 @@ export const productSlice = createSlice({
       state.loading = false;
       state.errorMessage = action.payload;
     });
-
+    // Get Product
     builder.addCase(getProduct.pending, (state) => {
       state.loading = true;
     });
+    builder.addCase(getProduct.fulfilled, (state, action) => {
+      state.loading = false;
+      state.product = action.payload;
+    });
+    builder.addCase(getProduct.rejected, (state, action) => {
+      state.loading = false;
+      state.errorMessage = action.payload;
+    });
+    // Get All Product
+    builder.addCase(getAllProduct.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getAllProduct.fulfilled, (state, action) => {
+      state.loading = false;
+      state.allProduct = action.payload;
+    });
+    builder.addCase(getAllProduct.rejected, (state, action) => {
+      state.loading = false;
+      state.errorMessage = action.payload;
+    });
+    // Delete Product
+    builder.addCase(deleteProduct.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(deleteProduct.fulfilled, (state, action) => {
+      state.loading = false;
+      state.successMessage = action.payload;
+    });
+    builder.addCase(deleteProduct.rejected, (state, action) => {
+      state.loading = false;
+      state.errorMessage = action.payload;
+    });
   },
 });
+
+export default productSlice.reducer;

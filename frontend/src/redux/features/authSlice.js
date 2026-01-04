@@ -34,6 +34,7 @@ export const authSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
+    // Register
     builder.addCase(register.pending, (state) => {
       state.loading = true;
     });
@@ -45,6 +46,7 @@ export const authSlice = createSlice({
       state.loading = false;
       state.error = action.error.message;
     });
+    //Login
     builder.addCase(login.pending, (state) => {
       state.loading = true;
     });
@@ -56,6 +58,7 @@ export const authSlice = createSlice({
       state.loading = false;
       state.error = action.error.message;
     });
+    //Logout
     builder.addCase(logout.pending, (state) => {
       state.loading = true;
     });
