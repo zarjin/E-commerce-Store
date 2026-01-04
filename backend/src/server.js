@@ -8,6 +8,7 @@ import connectDB from "./configs/db.js";
 import authRouter from "./routes/auth.js";
 import userRouter from "./routes/user.js";
 import productRouter from "./routes/product.js";
+import cartRouter from "./routes/cart.js";
 
 dotenv.config();
 connectDB();
@@ -38,6 +39,7 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/product", productRouter);
+app.use("/api/cart", cartRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
