@@ -7,7 +7,7 @@ export const createProduct = createAsyncThunk(
   async (productData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/product/create",
+        "https://vercel-backend-kappa-wine.vercel.app/api/product/create",
         productData
       );
 
@@ -25,7 +25,7 @@ export const getProduct = createAsyncThunk(
   async (productId, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/product/get/${productId}`
+        `https://vercel-backend-kappa-wine.vercel.app/api/product/get/${productId}`
       );
 
       return response.data;
@@ -39,7 +39,9 @@ export const getAllProduct = createAsyncThunk(
   "product/getAllProduct",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/product/get`);
+      const response = await axios.get(
+        `https://vercel-backend-kappa-wine.vercel.app/api/product/get`
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message);
@@ -52,7 +54,7 @@ export const deleteProduct = createAsyncThunk(
   async (productId, { rejectWithValue }) => {
     try {
       const response = await axios.delete(
-        `http://localhost:3000/api/product/delete/${productId}`
+        `https://vercel-backend-kappa-wine.vercel.app/api/product/delete/${productId}`
       );
       return response.data;
     } catch (error) {

@@ -10,7 +10,7 @@ export const register = createAsyncThunk(
   async (user, { rejectWithValue }) => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/auth/register",
+        "https://vercel-backend-kappa-wine.vercel.app/api/auth/register",
         user,
         { withCredentials: true }
       );
@@ -31,7 +31,7 @@ export const login = createAsyncThunk(
   async (user, { rejectWithValue }) => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/auth/login",
+        "https://vercel-backend-kappa-wine.vercel.app/api/auth/login",
         user,
         { withCredentials: true }
       );
@@ -50,7 +50,7 @@ export const logout = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/auth/logout",
+        "https://vercel-backend-kappa-wine.vercel.app/api/auth/logout",
         {},
         { withCredentials: true }
       );
