@@ -1,75 +1,116 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "react-toastify";
 
-export const register = createAsyncThunk("auth/register", async (user) => {
-  const response = await axios.post(
-    "http://localhost:3000/api/auth/register",
-    user,
-    { withCredentials: true }
-  );
-  return response.data;
-});
+/* ======================
+   REGISTER
+====================== */
+export const register = createAsyncThunk(
+  "auth/register",
+  async (user, { rejectWithValue }) => {
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/api/auth/register",
+        user,
+        { withCredentials: true }
+      );
+      return res.data.message;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Registration failed"
+      );
+    }
+  }
+);
 
-export const login = createAsyncThunk("auth/login", async (user) => {
-  const response = await axios.post(
-    "http://localhost:3000/api/auth/login",
-    user,
-    { withCredentials: true }
-  );
+/* ======================
+   LOGIN
+====================== */
+export const login = createAsyncThunk(
+  "auth/login",
+  async (user, { rejectWithValue }) => {
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/api/auth/login",
+        user,
+        { withCredentials: true }
+      );
+      return res.data.message;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || "Login failed");
+    }
+  }
+);
 
-  return response.data;
-});
+/* ======================
+   LOGOUT
+====================== */
+export const logout = createAsyncThunk(
+  "auth/logout",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/api/auth/logout",
+        {},
+        { withCredentials: true }
+      );
+      return res.data.message;
+    } catch (error) {
+      return rejectWithValue("Logout failed");
+    }
+  }
+);
 
-export const logout = createAsyncThunk("auth/logout", async () => {
-  const response = await axios.post("http://localhost:3000/api/auth/logout");
-  return response.data;
-});
-
-export const authSlice = createSlice({
+/* ======================
+   SLICE
+====================== */
+const authSlice = createSlice({
   name: "auth",
   initialState: {
-    successMessage: null,
     loading: false,
-    error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
-    // Register
-    builder.addCase(register.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(register.fulfilled, (state, action) => {
-      state.loading = false;
-      state.successMessage = action.payload;
-    });
-    builder.addCase(register.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.error.message;
-    });
-    //Login
-    builder.addCase(login.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(login.fulfilled, (state, action) => {
-      state.loading = false;
-      state.successMessage = action.payload;
-    });
-    builder.addCase(login.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.error.message;
-    });
-    //Logout
-    builder.addCase(logout.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(logout.fulfilled, (state) => {
-      state.loading = false;
-      state.successMessage = null;
-    });
-    builder.addCase(logout.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.error.message;
-    });
+    builder
+
+      // REGISTER
+      .addCase(register.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        state.loading = false;
+        toast.success(action.payload);
+      })
+      .addCase(register.rejected, (state, action) => {
+        state.loading = false;
+        toast.error(action.payload);
+      })
+
+      // LOGIN
+      .addCase(login.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.loading = false;
+        toast.success(action.payload);
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.loading = false;
+        toast.error(action.payload);
+      })
+
+      // LOGOUT
+      .addCase(logout.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(logout.fulfilled, (state, action) => {
+        state.loading = false;
+        toast.success(action.payload);
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.loading = false;
+        toast.error(action.payload);
+      });
   },
 });
 

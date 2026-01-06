@@ -11,7 +11,7 @@ const Register = () => {
   });
 
   const dispatch = useDispatch();
-  const { loading, error, successMessage } = useSelector((state) => state.auth);
+  const { loading } = useSelector((state) => state.auth);
 
   const handleChange = (e) => {
     if (e.target.name === "profile") {
@@ -32,7 +32,6 @@ const Register = () => {
     }
 
     dispatch(register(formData));
-    alert(successMessage.message);
   };
   return (
     <div className="relative flex min-h-screen items-center justify-center p-4 overflow-hidden">
@@ -102,7 +101,6 @@ const Register = () => {
             >
               {loading ? "...loading" : "Create Account"}
             </button>
-            <div className="errorMessage">{error}</div>
           </form>
         </div>
         <div className="mt-4 text-center">

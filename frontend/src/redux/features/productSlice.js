@@ -60,7 +60,7 @@ export const productSlice = createSlice({
     });
     builder.addCase(createProduct.fulfilled, (state, action) => {
       state.loading = false;
-      state.successMessage = action.error.message;
+      state.successMessage = action.payload;
     });
 
     builder.addCase(createProduct.rejected, (state, action) => {
