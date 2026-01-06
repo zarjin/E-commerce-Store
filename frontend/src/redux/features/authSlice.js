@@ -56,7 +56,7 @@ export const logout = createAsyncThunk(
       );
       return res.data.message;
     } catch (error) {
-      return rejectWithValue("Logout failed");
+      return rejectWithValue(error.response?.data?.message);
     }
   }
 );

@@ -1,17 +1,38 @@
+import { useEffect } from "react";
 import Button from "../components/Button";
+import { getAllProduct } from "../redux/features/productSlice.js";
+import { useDispatch, useSelector } from "react-redux";
+
 export default function Product() {
+  const dispatch = useDispatch();
+  const { allProduct, loading } = useSelector((state) => state.product);
+
+  useEffect(() => {
+    dispatch(getAllProduct());
+  }, [dispatch]);
+
+  if (loading) {
+    return <p className="text-center mt-10">Loading products...</p>;
+  }
+
+  if (!allProduct.length) {
+    return <p className="text-center mt-10">No products found.</p>;
+  }
+
   return (
-    <div className="w-full h-screen flex flex-col items-center pt-8">
+    <div className="w-full min-h-screen flex flex-col items-center pt-8">
       <div className="Products grid grid-cols-3 gap-4 p-4">
-        <div className="productCard border p-4 rounded-lg shadow-md space-y-6">
-          <img
-            src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt=""
-          />
-          <h2 className="text-xl font-semibold mb-2">Product 1</h2>
-          <p className="text-gray-600">$19.99</p>
-          <Button buttonName={"Add to Cart"} />
-        </div>
+        {allProduct.map((items) => (
+          <div
+            key={items._id}
+            className="productCard border p-4 rounded-lg shadow-md space-y-6"
+          >
+            <img src={items.image} alt={items.name} />
+            <h2 className="text-xl font-semibold">{items.name}</h2>
+            <p className="text-gray-600">{items.price}</p>
+            <Button buttonName="Add to Cart" />
+          </div>
+        ))}
       </div>
     </div>
   );

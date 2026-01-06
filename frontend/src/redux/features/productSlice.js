@@ -1,45 +1,63 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const createProduct = createAsyncThunk(
   "product/createProduct",
-  async (productData) => {
-    const response = await axios.post(
-      "http://localhost:3000/api/product/create",
-      productData
-    );
+  async (productData, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/product/create",
+        productData
+      );
 
-    return response.data.message;
+      return response.data.message;
+    } catch (error) {
+      return (
+        rejectWithValue(error.response?.data?.message) || "Product Create Error"
+      );
+    }
   }
 );
 
 export const getProduct = createAsyncThunk(
   "product/getProduct",
-  async (productId) => {
-    const response = await axios.get(
-      `http://localhost:3000/api/product/get/${productId}`
-    );
+  async (productId, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/api/product/get/${productId}`
+      );
 
-    return response.data;
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message);
+    }
   }
 );
 
 export const getAllProduct = createAsyncThunk(
   "product/getAllProduct",
-  async () => {
-    const response = await axios.get(`http://localhost:3000/api/product/get`);
-
-    return response.data;
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`http://localhost:3000/api/product/get`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message);
+    }
   }
 );
 
 export const deleteProduct = createAsyncThunk(
   "product/deleteProduct",
-  async (productId) => {
-    const response = await axios.delete(
-      `http://localhost:3000/api/product/delete/${productId}`
-    );
-    return response.data;
+  async (productId, { rejectWithValue }) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:3000/api/product/delete/${productId}`
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message);
+    }
   }
 );
 
@@ -47,10 +65,8 @@ export const productSlice = createSlice({
   name: "product",
   initialState: {
     product: null,
-    allProduct: null,
+    allProduct: [],
     loading: false,
-    successMessage: null,
-    errorMessage: null,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -60,12 +76,12 @@ export const productSlice = createSlice({
     });
     builder.addCase(createProduct.fulfilled, (state, action) => {
       state.loading = false;
-      state.successMessage = action.payload;
+      toast.success(action.payload);
     });
 
     builder.addCase(createProduct.rejected, (state, action) => {
       state.loading = false;
-      state.errorMessage = action.payload;
+      toast.error(action.payload);
     });
     // Get Product
     builder.addCase(getProduct.pending, (state) => {
@@ -73,11 +89,11 @@ export const productSlice = createSlice({
     });
     builder.addCase(getProduct.fulfilled, (state, action) => {
       state.loading = false;
-      state.product = action.payload;
+      toast.success(action.payload);
     });
     builder.addCase(getProduct.rejected, (state, action) => {
       state.loading = false;
-      state.errorMessage = action.payload;
+      toast.error(action.payload);
     });
     // Get All Product
     builder.addCase(getAllProduct.pending, (state) => {
@@ -89,7 +105,7 @@ export const productSlice = createSlice({
     });
     builder.addCase(getAllProduct.rejected, (state, action) => {
       state.loading = false;
-      state.errorMessage = action.payload;
+      toast.error(action.payload);
     });
     // Delete Product
     builder.addCase(deleteProduct.pending, (state) => {
@@ -97,11 +113,11 @@ export const productSlice = createSlice({
     });
     builder.addCase(deleteProduct.fulfilled, (state, action) => {
       state.loading = false;
-      state.successMessage = action.payload;
+      toast.success(action.payload);
     });
     builder.addCase(deleteProduct.rejected, (state, action) => {
       state.loading = false;
-      state.errorMessage = action.payload;
+      toast.error(action.payload);
     });
   },
 });
